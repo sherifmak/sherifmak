@@ -1,0 +1,6 @@
+// Copy this file to Config.xcconfig and fill in your WHOOP API credentials.
+// Register at https://developer.whoop.com to get these values.
+// DO NOT commit Config.xcconfig to source control.
+
+WHOOP_CLIENT_ID = your_client_id_here
+WHOOP_CLIENT_SECRET = your_client_secret_here
