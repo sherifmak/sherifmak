@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#e9ecef"/>
+    </linearGradient>
+  </defs>
+
+  <!-- iPhone frame -->
+  <rect width="390" height="844" rx="40" fill="url(#bg)"/>
+
+  <!-- Status bar -->
+  <text x="30" y="58" font-family="SF Pro, -apple-system, Helvetica" font-size="15" font-weight="600" fill="#1c1c1e">9:41</text>
+  <text x="330" y="58" font-family="SF Pro, -apple-system, Helvetica" font-size="15" fill="#1c1c1e">🔋</text>
+
+  <!-- Nav bar -->
+  <text x="195" y="105" font-family="SF Pro, -apple-system, Helvetica" font-size="17" font-weight="700" fill="#1c1c1e" text-anchor="middle">Whoop Tamagotchi</text>
+
+  <!-- Tamagotchi character (happy/light state) -->
+  <g transform="translate(195, 280)">
+    <!-- Body -->
+    <ellipse cx="0" cy="0" rx="60" ry="52" fill="#8ce68a" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="60" ry="52" fill="none" stroke="#6bc469" stroke-width="2"/>
+
+    <!-- Sparkles -->
+    <text x="-52" y="-38" font-size="14" fill="#ffd700">✦</text>
+    <text x="48" y="-22" font-size="10" fill="#ffd700">✦</text>
+
+    <!-- Eyes (happy) -->
+    <circle cx="-16" cy="-8" r="6" fill="#1c1c1e"/>
+    <circle cx="16" cy="-8" r="6" fill="#1c1c1e"/>
+    <circle cx="-14" cy="-10" r="2" fill="white"/>
+    <circle cx="18" cy="-10" r="2" fill="white"/>
+
+    <!-- Mouth (smile) -->
+    <path d="M -12 8 Q 0 22 12 8" fill="#1c1c1e" stroke="none"/>
+  </g>
+
+  <!-- "Meet your Tamagotchi!" text -->
+  <text x="195" y="390" font-family="SF Pro, -apple-system, Helvetica" font-size="22" font-weight="700" fill="#1c1c1e" text-anchor="middle">Meet your Tamagotchi!</text>
+
+  <!-- Description -->
+  <text x="195" y="425" font-family="SF Pro, -apple-system, Helvetica" font-size="15" fill="#8e8e93" text-anchor="middle">Connect your WHOOP to bring your</text>
+  <text x="195" y="445" font-family="SF Pro, -apple-system, Helvetica" font-size="15" fill="#8e8e93" text-anchor="middle">Tamagotchi to life. It'll react to your</text>
+  <text x="195" y="465" font-family="SF Pro, -apple-system, Helvetica" font-size="15" fill="#8e8e93" text-anchor="middle">daily strain in real time.</text>
+
+  <!-- Connect WHOOP button -->
+  <rect x="40" y="510" width="310" height="54" rx="14" fill="#1c1c1e"/>
+  <text x="175" y="542" font-family="SF Pro, -apple-system, Helvetica" font-size="17" font-weight="600" fill="white">♥</text>
+  <text x="195" y="543" font-family="SF Pro, -apple-system, Helvetica" font-size="17" font-weight="600" fill="white">Connect WHOOP</text>
+
+  <!-- Step indicator -->
+  <text x="195" y="620" font-family="SF Pro, -apple-system, Helvetica" font-size="12" fill="#c7c7cc" text-anchor="middle">STEP 1: SIGN IN</text>
+
+  <!-- Home indicator -->
+  <rect x="145" y="818" width="100" height="5" rx="2.5" fill="#1c1c1e" opacity="0.3"/>
+</svg>

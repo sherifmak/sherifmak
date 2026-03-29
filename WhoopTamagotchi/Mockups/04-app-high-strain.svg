@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#e9ecef"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="390" height="844" rx="40" fill="url(#bg)"/>
+  <text x="30" y="58" font-family="SF Pro, -apple-system, Helvetica" font-size="15" font-weight="600" fill="#1c1c1e">9:41</text>
+  <text x="195" y="105" font-family="SF Pro, -apple-system, Helvetica" font-size="17" font-weight="700" fill="#1c1c1e" text-anchor="middle">Whoop Tamagotchi</text>
+
+  <!-- Tamagotchi - HIGH STRAIN (strain 15.5) -->
+  <g transform="translate(195, 250)">
+    <!-- Body -->
+    <ellipse cx="0" cy="0" rx="70" ry="60" fill="#f29a4d"/>
+    <ellipse cx="0" cy="0" rx="70" ry="60" fill="none" stroke="#e07d2a" stroke-width="2"/>
+
+    <!-- Sweat drops -->
+    <ellipse cx="52" cy="-30" rx="4" ry="5" fill="#5ac8fa" opacity="0.7"/>
+    <ellipse cx="58" cy="-14" rx="3" ry="4" fill="#5ac8fa" opacity="0.5"/>
+
+    <!-- Squinted eyes -->
+    <ellipse cx="-16" cy="-6" rx="8" ry="5" fill="#1c1c1e"/>
+    <ellipse cx="16" cy="-6" rx="8" ry="5" fill="#1c1c1e"/>
+
+    <!-- Open panting mouth -->
+    <ellipse cx="0" cy="16" rx="10" ry="12" fill="#1c1c1e"/>
+    <ellipse cx="0" cy="18" rx="6" ry="5" fill="#ff6b6b" opacity="0.6"/>
+  </g>
+
+  <text x="195" y="370" font-family="SF Pro, -apple-system, Helvetica" font-size="15" font-weight="500" fill="#8e8e93" text-anchor="middle">Today's Strain</text>
+  <text x="195" y="430" font-family="SF Pro, -apple-system, Helvetica" font-size="56" font-weight="700" fill="#1c1c1e" text-anchor="middle">15.5</text>
+  <text x="195" y="460" font-family="SF Pro, -apple-system, Helvetica" font-size="18" fill="#f29a4d" text-anchor="middle">Pushing It</text>
+
+  <!-- Strain bar -->
+  <rect x="80" y="485" width="230" height="8" rx="4" fill="#e9ecef"/>
+  <rect x="80" y="485" width="170" height="8" rx="4" fill="#f29a4d"/>
+  <text x="195" y="510" font-family="SF Pro, -apple-system, Helvetica" font-size="11" fill="#8e8e93" text-anchor="middle">15.5 / 21</text>
+
+  <rect x="135" y="545" width="120" height="40" rx="10" fill="#007AFF"/>
+  <text x="195" y="571" font-family="SF Pro, -apple-system, Helvetica" font-size="15" font-weight="600" fill="white" text-anchor="middle">Refresh</text>
+
+  <text x="195" y="750" font-family="SF Pro, -apple-system, Helvetica" font-size="13" fill="#FF3B30" text-anchor="middle">Sign Out</text>
+  <text x="195" y="800" font-family="SF Pro, -apple-system, Helvetica" font-size="12" fill="#c7c7cc" text-anchor="middle">HIGH STRAIN — Strain 13-17</text>
+
+  <rect x="145" y="818" width="100" height="5" rx="2.5" fill="#1c1c1e" opacity="0.3"/>
+</svg>

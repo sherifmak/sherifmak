@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="900" viewBox="0 0 800 900">
+  <defs>
+    <linearGradient id="restBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d6e8f8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#d6e8f8" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="lightBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c8f0c8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#c8f0c8" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="modBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5edb3" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f5edb3" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="highBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5d4b3" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f5d4b3" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="overBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5b3b3" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f5b3b3" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="900" fill="#1c1c1e"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="SF Pro, -apple-system, Helvetica" font-size="20" font-weight="700" fill="white" text-anchor="middle">Widget Views — All Strain Levels</text>
+
+  <!-- SMALL WIDGETS ROW -->
+  <text x="400" y="80" font-family="SF Pro, -apple-system, Helvetica" font-size="14" fill="#8e8e93" text-anchor="middle">Small Widgets (systemSmall)</text>
+
+  <!-- Small Widget 1: Resting -->
+  <g transform="translate(30, 100)">
+    <rect width="140" height="140" rx="20" fill="url(#restBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="70" cy="55" rx="30" ry="26" fill="#8cbff3"/>
+    <text x="90" y="30" font-family="SF Pro, Helvetica" font-size="8" font-weight="700" fill="#6fa8e8" opacity="0.6">z z Z</text>
+    <line x1="60" y1="52" x2="68" y2="52" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round"/>
+    <line x1="72" y1="52" x2="80" y2="52" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round"/>
+    <line x1="64" y1="62" x2="76" y2="62" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <!-- Bar -->
+    <rect x="30" y="92" width="80" height="5" rx="2.5" fill="#444"/>
+    <rect x="30" y="92" width="8" height="5" rx="2.5" fill="#8cbff3"/>
+    <text x="70" y="108" font-family="SF Pro, Helvetica" font-size="8" fill="#8e8e93" text-anchor="middle">2.1 / 21</text>
+    <text x="70" y="125" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="#8e8e93" text-anchor="middle">Chilling</text>
+  </g>
+
+  <!-- Small Widget 2: Light -->
+  <g transform="translate(185, 100)">
+    <rect width="140" height="140" rx="20" fill="url(#lightBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="70" cy="55" rx="30" ry="26" fill="#8ce68a"/>
+    <text x="40" y="30" font-size="10" fill="#ffd700">✦</text>
+    <text x="98" y="45" font-size="8" fill="#ffd700">✦</text>
+    <circle cx="62" cy="52" r="4" fill="#1c1c1e"/>
+    <circle cx="78" cy="52" r="4" fill="#1c1c1e"/>
+    <path d="M 62 62 Q 70 72 78 62" fill="#1c1c1e"/>
+    <rect x="30" y="92" width="80" height="5" rx="2.5" fill="#444"/>
+    <rect x="30" y="92" width="23" height="5" rx="2.5" fill="#8ce68a"/>
+    <text x="70" y="108" font-family="SF Pro, Helvetica" font-size="8" fill="#8e8e93" text-anchor="middle">6.0 / 21</text>
+    <text x="70" y="125" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="#8e8e93" text-anchor="middle">Easy Day</text>
+  </g>
+
+  <!-- Small Widget 3: Moderate -->
+  <g transform="translate(340, 100)">
+    <rect width="140" height="140" rx="20" fill="url(#modBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="70" cy="55" rx="30" ry="26" fill="#f2d959"/>
+    <rect x="55" y="46" width="10" height="2" fill="#1c1c1e"/>
+    <rect x="75" y="46" width="10" height="2" fill="#1c1c1e"/>
+    <circle cx="60" cy="54" r="4" fill="#1c1c1e"/>
+    <circle cx="80" cy="54" r="4" fill="#1c1c1e"/>
+    <path d="M 64 64 Q 70 70 76 64" fill="#1c1c1e"/>
+    <rect x="30" y="92" width="80" height="5" rx="2.5" fill="#444"/>
+    <rect x="30" y="92" width="40" height="5" rx="2.5" fill="#f2d959"/>
+    <text x="70" y="108" font-family="SF Pro, Helvetica" font-size="8" fill="#8e8e93" text-anchor="middle">10.5 / 21</text>
+    <text x="70" y="125" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="#8e8e93" text-anchor="middle">Solid Work</text>
+  </g>
+
+  <!-- Small Widget 4: High -->
+  <g transform="translate(495, 100)">
+    <rect width="140" height="140" rx="20" fill="url(#highBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="70" cy="55" rx="30" ry="26" fill="#f29a4d"/>
+    <ellipse cx="92" cy="32" rx="3" ry="4" fill="#5ac8fa" opacity="0.6"/>
+    <ellipse cx="62" cy="52" rx="6" ry="4" fill="#1c1c1e"/>
+    <ellipse cx="78" cy="52" rx="6" ry="4" fill="#1c1c1e"/>
+    <ellipse cx="70" cy="65" rx="7" ry="8" fill="#1c1c1e"/>
+    <ellipse cx="70" cy="67" rx="4" ry="3" fill="#ff6b6b" opacity="0.5"/>
+    <rect x="30" y="92" width="80" height="5" rx="2.5" fill="#444"/>
+    <rect x="30" y="92" width="59" height="5" rx="2.5" fill="#f29a4d"/>
+    <text x="70" y="108" font-family="SF Pro, Helvetica" font-size="8" fill="#8e8e93" text-anchor="middle">15.5 / 21</text>
+    <text x="70" y="125" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="#8e8e93" text-anchor="middle">Pushing It</text>
+  </g>
+
+  <!-- Small Widget 5: Overreach -->
+  <g transform="translate(650, 100)">
+    <rect width="140" height="140" rx="20" fill="url(#overBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="70" cy="55" rx="30" ry="26" fill="#f25959"/>
+    <ellipse cx="94" cy="30" rx="4" ry="5" fill="#5ac8fa" opacity="0.6"/>
+    <ellipse cx="98" cy="45" rx="3" ry="4" fill="#5ac8fa" opacity="0.4"/>
+    <!-- X eyes -->
+    <line x1="56" y1="46" x2="66" y2="56" stroke="#1c1c1e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="66" y1="46" x2="56" y2="56" stroke="#1c1c1e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="74" y1="46" x2="84" y2="56" stroke="#1c1c1e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="84" y1="46" x2="74" y2="56" stroke="#1c1c1e" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 60 65 Q 65 60 70 65 Q 75 70 80 65" fill="none" stroke="#1c1c1e" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="30" y="92" width="80" height="5" rx="2.5" fill="#444"/>
+    <rect x="30" y="92" width="75" height="5" rx="2.5" fill="#f25959"/>
+    <text x="70" y="108" font-family="SF Pro, Helvetica" font-size="8" fill="#8e8e93" text-anchor="middle">19.8 / 21</text>
+    <text x="70" y="125" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="#8e8e93" text-anchor="middle">All Out</text>
+  </g>
+
+  <!-- MEDIUM WIDGETS -->
+  <text x="400" y="290" font-family="SF Pro, -apple-system, Helvetica" font-size="14" fill="#8e8e93" text-anchor="middle">Medium Widgets (systemMedium)</text>
+
+  <!-- Medium Widget: Light -->
+  <g transform="translate(60, 310)">
+    <rect width="310" height="140" rx="20" fill="url(#lightBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="80" cy="60" rx="30" ry="26" fill="#8ce68a"/>
+    <text x="50" y="35" font-size="10" fill="#ffd700">✦</text>
+    <text x="108" y="50" font-size="8" fill="#ffd700">✦</text>
+    <circle cx="72" cy="57" r="4" fill="#1c1c1e"/>
+    <circle cx="88" cy="57" r="4" fill="#1c1c1e"/>
+    <path d="M 72 67 Q 80 77 88 67" fill="#1c1c1e"/>
+    <!-- Bar under character -->
+    <rect x="50" y="96" width="60" height="4" rx="2" fill="#444"/>
+    <rect x="50" y="96" width="17" height="4" rx="2" fill="#8ce68a"/>
+    <text x="80" y="112" font-family="SF Pro, Helvetica" font-size="7" fill="#8e8e93" text-anchor="middle">6.0 / 21</text>
+    <text x="80" y="125" font-family="SF Pro, Helvetica" font-size="9" font-weight="600" fill="#8e8e93" text-anchor="middle">Easy Day</text>
+    <!-- Right side text -->
+    <text x="145" y="40" font-family="SF Pro, Helvetica" font-size="10" fill="#8e8e93">Today's Strain</text>
+    <text x="145" y="75" font-family="SF Pro, Helvetica" font-size="36" font-weight="700" fill="white">6.0</text>
+    <text x="145" y="95" font-family="SF Pro, Helvetica" font-size="13" font-weight="600" fill="#8ce68a">Easy Day</text>
+    <text x="145" y="115" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93">Updated 5 min ago</text>
+  </g>
+
+  <!-- Medium Widget: High -->
+  <g transform="translate(430, 310)">
+    <rect width="310" height="140" rx="20" fill="url(#highBg)" stroke="#333" stroke-width="1"/>
+    <ellipse cx="80" cy="60" rx="30" ry="26" fill="#f29a4d"/>
+    <ellipse cx="102" cy="37" rx="3" ry="4" fill="#5ac8fa" opacity="0.6"/>
+    <ellipse cx="62" cy="57" rx="6" ry="4" fill="#1c1c1e"/>
+    <ellipse cx="78" cy="57" rx="6" ry="4" fill="#1c1c1e"/>
+    <ellipse cx="70" cy="70" rx="7" ry="8" fill="#1c1c1e"/>
+    <ellipse cx="70" cy="72" rx="4" ry="3" fill="#ff6b6b" opacity="0.5"/>
+    <rect x="50" y="96" width="60" height="4" rx="2" fill="#444"/>
+    <rect x="50" y="96" width="44" height="4" rx="2" fill="#f29a4d"/>
+    <text x="80" y="112" font-family="SF Pro, Helvetica" font-size="7" fill="#8e8e93" text-anchor="middle">15.5 / 21</text>
+    <text x="80" y="125" font-family="SF Pro, Helvetica" font-size="9" font-weight="600" fill="#8e8e93" text-anchor="middle">Pushing It</text>
+    <text x="145" y="40" font-family="SF Pro, Helvetica" font-size="10" fill="#8e8e93">Today's Strain</text>
+    <text x="145" y="75" font-family="SF Pro, Helvetica" font-size="36" font-weight="700" fill="white">15.5</text>
+    <text x="145" y="95" font-family="SF Pro, Helvetica" font-size="13" font-weight="600" fill="#f29a4d">Pushing It</text>
+    <text x="145" y="115" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93">Updated 2 min ago</text>
+  </g>
+
+  <!-- REAUTH WIDGET -->
+  <text x="400" y="505" font-family="SF Pro, -apple-system, Helvetica" font-size="14" fill="#8e8e93" text-anchor="middle">Expired Session State</text>
+
+  <!-- Small reauth -->
+  <g transform="translate(200, 525)">
+    <rect width="140" height="140" rx="20" fill="#2c2c2e" stroke="#333" stroke-width="1"/>
+    <text x="70" y="60" font-size="28" text-anchor="middle">⚠️</text>
+    <text x="70" y="90" font-family="SF Pro, Helvetica" font-size="10" font-weight="500" fill="#8e8e93" text-anchor="middle">Tap to sign in</text>
+  </g>
+
+  <!-- Medium reauth -->
+  <g transform="translate(370, 525)">
+    <rect width="310" height="140" rx="20" fill="#2c2c2e" stroke="#333" stroke-width="1"/>
+    <text x="50" y="78" font-size="32" text-anchor="middle">⚠️</text>
+    <text x="90" y="60" font-family="SF Pro, Helvetica" font-size="14" font-weight="600" fill="white">Session Expired</text>
+    <text x="90" y="82" font-family="SF Pro, Helvetica" font-size="11" fill="#8e8e93">Open app to reconnect WHOOP</text>
+  </g>
+
+  <!-- USER JOURNEY FLOW -->
+  <text x="400" y="720" font-family="SF Pro, -apple-system, Helvetica" font-size="14" fill="#8e8e93" text-anchor="middle">User Journey</text>
+
+  <g transform="translate(30, 740)">
+    <!-- Step 1 -->
+    <rect x="0" y="0" width="130" height="50" rx="10" fill="#333"/>
+    <text x="65" y="20" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="white" text-anchor="middle">1. Open App</text>
+    <text x="65" y="35" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93" text-anchor="middle">See onboarding</text>
+
+    <text x="148" y="28" font-family="SF Pro, Helvetica" font-size="16" fill="#8e8e93">→</text>
+
+    <!-- Step 2 -->
+    <rect x="165" y="0" width="130" height="50" rx="10" fill="#333"/>
+    <text x="230" y="20" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="white" text-anchor="middle">2. Connect WHOOP</text>
+    <text x="230" y="35" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93" text-anchor="middle">OAuth sign-in</text>
+
+    <text x="313" y="28" font-family="SF Pro, Helvetica" font-size="16" fill="#8e8e93">→</text>
+
+    <!-- Step 3 -->
+    <rect x="330" y="0" width="130" height="50" rx="10" fill="#333"/>
+    <text x="395" y="20" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="white" text-anchor="middle">3. See Tamagotchi</text>
+    <text x="395" y="35" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93" text-anchor="middle">In-app strain view</text>
+
+    <text x="478" y="28" font-family="SF Pro, Helvetica" font-size="16" fill="#8e8e93">→</text>
+
+    <!-- Step 4 -->
+    <rect x="495" y="0" width="130" height="50" rx="10" fill="#333"/>
+    <text x="560" y="20" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="white" text-anchor="middle">4. Add Widget</text>
+    <text x="560" y="35" font-family="SF Pro, Helvetica" font-size="9" fill="#8e8e93" text-anchor="middle">Home screen</text>
+
+    <text x="643" y="28" font-family="SF Pro, Helvetica" font-size="16" fill="#8e8e93">→</text>
+
+    <!-- Step 5 -->
+    <rect x="660" y="0" width="100" height="50" rx="10" fill="#007AFF"/>
+    <text x="710" y="20" font-family="SF Pro, Helvetica" font-size="10" font-weight="600" fill="white" text-anchor="middle">5. Enjoy!</text>
+    <text x="710" y="35" font-family="SF Pro, Helvetica" font-size="9" fill="white" opacity="0.8" text-anchor="middle">Auto-updates</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="400" y="850" font-family="SF Pro, -apple-system, Helvetica" font-size="11" fill="#555" text-anchor="middle">Widget refreshes every 15 minutes via WidgetKit timeline</text>
+  <text x="400" y="870" font-family="SF Pro, -apple-system, Helvetica" font-size="11" fill="#555" text-anchor="middle">Character expression and color change based on WHOOP strain (0-21)</text>
+</svg>
