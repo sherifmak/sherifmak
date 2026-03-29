@@ -1,11 +1,13 @@
 import SwiftUI
 
 // MARK: - Tamagotchi Character View
+// Used by both the main app and the widget.
+// Widget-safe: no animations, no .onAppear, no @State.
+// The app wraps this in TamagotchiAnimatedCharacter for bounce effects.
 
 struct TamagotchiCharacter: View {
     let strainLevel: StrainLevel
     let strain: Double
-    @State private var bounceOffset: CGFloat = 0
 
     var body: some View {
         VStack(spacing: 4) {
@@ -38,12 +40,6 @@ struct TamagotchiCharacter: View {
                     sparkles
                 }
             }
-            .offset(y: bounceOffset)
-            .onAppear {
-                withAnimation(bounceAnimation) {
-                    bounceOffset = -4
-                }
-            }
 
             // Strain bar
             strainBar
@@ -62,7 +58,6 @@ struct TamagotchiCharacter: View {
         HStack(spacing: 16) {
             switch strainLevel {
             case .resting:
-                // Closed/sleepy eyes
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 12, height: 3)
                     .foregroundColor(.black)
@@ -71,7 +66,6 @@ struct TamagotchiCharacter: View {
                     .foregroundColor(.black)
 
             case .light:
-                // Happy eyes
                 Circle()
                     .fill(Color.black)
                     .frame(width: 8, height: 8)
@@ -80,7 +74,6 @@ struct TamagotchiCharacter: View {
                     .frame(width: 8, height: 8)
 
             case .moderate:
-                // Determined eyes
                 VStack(spacing: 1) {
                     Rectangle()
                         .frame(width: 12, height: 2)
@@ -99,7 +92,6 @@ struct TamagotchiCharacter: View {
                 }
 
             case .high:
-                // Strained/intense eyes
                 Ellipse()
                     .fill(Color.black)
                     .frame(width: 10, height: 6)
@@ -108,7 +100,6 @@ struct TamagotchiCharacter: View {
                     .frame(width: 10, height: 6)
 
             case .overreach:
-                // X eyes or spiral eyes
                 Text("X")
                     .font(.system(size: 12, weight: .black))
                     .foregroundColor(.black)
@@ -125,25 +116,21 @@ struct TamagotchiCharacter: View {
     private var mouthView: some View {
         switch strainLevel {
         case .resting:
-            // Sleeping drool line
             RoundedRectangle(cornerRadius: 2)
                 .frame(width: 14, height: 3)
                 .foregroundColor(.black.opacity(0.6))
 
         case .light:
-            // Big happy smile
             HalfCircle()
                 .fill(Color.black)
                 .frame(width: 18, height: 9)
 
         case .moderate:
-            // Determined grin
             HalfCircle()
                 .fill(Color.black)
                 .frame(width: 14, height: 6)
 
         case .high:
-            // Open mouth panting
             Ellipse()
                 .fill(Color.black)
                 .frame(width: 12, height: 10)
@@ -155,7 +142,6 @@ struct TamagotchiCharacter: View {
                 )
 
         case .overreach:
-            // Wavy exhausted mouth
             WavyMouth()
                 .stroke(Color.black, lineWidth: 2)
                 .frame(width: 18, height: 8)
@@ -214,7 +200,7 @@ struct TamagotchiCharacter: View {
                         .frame(height: 6)
                     RoundedRectangle(cornerRadius: 3)
                         .fill(bodyColor)
-                        .frame(width: geo.size.width * CGFloat(strain / 21.0), height: 6)
+                        .frame(width: geo.size.width * CGFloat(min(strain / 21.0, 1.0)), height: 6)
                 }
             }
             .frame(height: 6)
@@ -228,28 +214,41 @@ struct TamagotchiCharacter: View {
 
     // MARK: - Helpers
 
-    private var bodyColor: Color {
+    var bodyColor: Color {
         switch strainLevel {
-        case .resting:   return Color(red: 0.55, green: 0.75, blue: 0.95) // Soft blue
-        case .light:     return Color(red: 0.55, green: 0.90, blue: 0.60) // Green
-        case .moderate:  return Color(red: 0.95, green: 0.85, blue: 0.35) // Yellow
-        case .high:      return Color(red: 0.95, green: 0.60, blue: 0.30) // Orange
-        case .overreach: return Color(red: 0.95, green: 0.35, blue: 0.35) // Red
+        case .resting:   return Color(red: 0.55, green: 0.75, blue: 0.95)
+        case .light:     return Color(red: 0.55, green: 0.90, blue: 0.60)
+        case .moderate:  return Color(red: 0.95, green: 0.85, blue: 0.35)
+        case .high:      return Color(red: 0.95, green: 0.60, blue: 0.30)
+        case .overreach: return Color(red: 0.95, green: 0.35, blue: 0.35)
         }
+    }
+}
+
+// MARK: - Animated Wrapper (App Only — NOT for WidgetKit)
+
+struct TamagotchiAnimatedCharacter: View {
+    let strainLevel: StrainLevel
+    let strain: Double
+    @State private var bounceOffset: CGFloat = 0
+
+    var body: some View {
+        TamagotchiCharacter(strainLevel: strainLevel, strain: strain)
+            .offset(y: bounceOffset)
+            .onAppear {
+                withAnimation(bounceAnimation) {
+                    bounceOffset = -4
+                }
+            }
     }
 
     private var bounceAnimation: Animation {
         switch strainLevel {
-        case .resting:
-            return .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
-        case .light:
-            return .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
-        case .moderate:
-            return .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
-        case .high:
-            return .easeInOut(duration: 0.5).repeatForever(autoreverses: true)
-        case .overreach:
-            return .easeInOut(duration: 0.3).repeatForever(autoreverses: true)
+        case .resting:   return .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
+        case .light:     return .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
+        case .moderate:  return .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
+        case .high:      return .easeInOut(duration: 0.5).repeatForever(autoreverses: true)
+        case .overreach: return .easeInOut(duration: 0.3).repeatForever(autoreverses: true)
         }
     }
 }
@@ -288,11 +287,11 @@ struct WavyMouth: Shape {
 
 #Preview("All Strain Levels") {
     HStack(spacing: 20) {
-        TamagotchiCharacter(strainLevel: .resting, strain: 2.0)
-        TamagotchiCharacter(strainLevel: .light, strain: 6.0)
-        TamagotchiCharacter(strainLevel: .moderate, strain: 10.5)
-        TamagotchiCharacter(strainLevel: .high, strain: 15.0)
-        TamagotchiCharacter(strainLevel: .overreach, strain: 19.5)
+        TamagotchiAnimatedCharacter(strainLevel: .resting, strain: 2.0)
+        TamagotchiAnimatedCharacter(strainLevel: .light, strain: 6.0)
+        TamagotchiAnimatedCharacter(strainLevel: .moderate, strain: 10.5)
+        TamagotchiAnimatedCharacter(strainLevel: .high, strain: 15.0)
+        TamagotchiAnimatedCharacter(strainLevel: .overreach, strain: 19.5)
     }
     .padding()
 }

@@ -86,4 +86,4 @@ WhoopTamagotchi/
 - **WidgetKit** for home screen widgets
 - **App Groups** for sharing data between app and widget
 - **Keychain** for secure OAuth token storage
-- **WHOOP API v1** for daily strain/cycle data
+- **WHOOP API v2** for daily strain/cycle data

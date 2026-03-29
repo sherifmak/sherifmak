@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 
 struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
@@ -14,6 +15,11 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("Whoop Tamagotchi")
+            .alert("Error", isPresented: $viewModel.showError) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(viewModel.errorMessage)
+            }
         }
     }
 
@@ -21,7 +27,7 @@ struct ContentView: View {
 
     private var loggedInView: some View {
         VStack(spacing: 24) {
-            TamagotchiCharacter(
+            TamagotchiAnimatedCharacter(
                 strainLevel: viewModel.strainLevel,
                 strain: viewModel.strain
             )
@@ -64,7 +70,7 @@ struct ContentView: View {
     private var loginView: some View {
         VStack(spacing: 32) {
             VStack(spacing: 12) {
-                TamagotchiCharacter(strainLevel: .light, strain: 5.0)
+                TamagotchiAnimatedCharacter(strainLevel: .light, strain: 5.0)
                     .scaleEffect(1.5)
                     .frame(height: 160)
 
@@ -108,6 +114,8 @@ final class ContentViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var strain: Double = 0.0
     @Published var strainLevel: StrainLevel = .resting
+    @Published var showError = false
+    @Published var errorMessage = ""
 
     private var oauthState: String?
     private let api = WhoopAPIClient.shared
@@ -116,7 +124,7 @@ final class ContentViewModel: ObservableObject {
         isLoggedIn = OAuthTokens.load() != nil
         if let state = TamagotchiState.load() {
             strain = state.strain
-            strainLevel = StrainLevel.from(strain: state.strain)
+            strainLevel = state.strainLevel
         }
     }
 
@@ -132,6 +140,7 @@ final class ContentViewModel: ObservableObject {
               let code = components.queryItems?.first(where: { $0.name == "code" })?.value,
               let state = components.queryItems?.first(where: { $0.name == "state" })?.value,
               state == oauthState else {
+            showErrorAlert("Authentication failed. Please try again.")
             return
         }
 
@@ -140,8 +149,9 @@ final class ContentViewModel: ObservableObject {
                 _ = try await api.exchangeCodeForTokens(code: code)
                 isLoggedIn = true
                 await fetchStrain()
+                WidgetCenter.shared.reloadAllTimelines()
             } catch {
-                print("OAuth error: \(error)")
+                showErrorAlert("Failed to connect WHOOP: \(error.localizedDescription)")
             }
         }
     }
@@ -154,8 +164,11 @@ final class ContentViewModel: ObservableObject {
             let value = try await api.fetchTodayStrain()
             strain = value
             strainLevel = StrainLevel.from(strain: value)
+        } catch let error as WhoopAPIError where error == .notAuthenticated {
+            isLoggedIn = false
+            showErrorAlert("Your session expired. Please sign in again.")
         } catch {
-            print("Fetch error: \(error)")
+            showErrorAlert("Could not fetch strain: \(error.localizedDescription)")
         }
     }
 
@@ -164,5 +177,11 @@ final class ContentViewModel: ObservableObject {
         isLoggedIn = false
         strain = 0
         strainLevel = .resting
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    private func showErrorAlert(_ message: String) {
+        errorMessage = message
+        showError = true
     }
 }

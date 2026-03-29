@@ -5,7 +5,7 @@ import SwiftUI
 
 struct TamagotchiTimelineProvider: TimelineProvider {
     func placeholder(in context: Context) -> TamagotchiEntry {
-        TamagotchiEntry(date: Date(), strain: 10.0, strainLevel: .moderate, isPlaceholder: true)
+        TamagotchiEntry(date: Date(), strain: 10.0, strainLevel: .moderate, needsReauth: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TamagotchiEntry) -> Void) {
@@ -13,34 +13,41 @@ struct TamagotchiTimelineProvider: TimelineProvider {
             completion(placeholder(in: context))
             return
         }
-        let entry = entryFromStoredState()
-        completion(entry)
+        completion(entryFromStoredState())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TamagotchiEntry>) -> Void) {
-        Task {
-            var strain: Double = 0.0
+        // Read cached state first to ensure we always have something
+        let cachedEntry = entryFromStoredState()
 
-            // Try fetching fresh data from WHOOP
+        Task {
+            var entry = cachedEntry
+
             do {
-                strain = try await WhoopAPIClient.shared.fetchTodayStrain()
+                let strain = try await WhoopAPIClient.shared.fetchTodayStrain()
+                let level = StrainLevel.from(strain: strain)
+                entry = TamagotchiEntry(
+                    date: Date(),
+                    strain: strain,
+                    strainLevel: level,
+                    needsReauth: false
+                )
             } catch {
-                // Fall back to stored state
-                if let state = TamagotchiState.load() {
-                    strain = state.strain
+                // On auth failure, flag it so the widget can show a message
+                if let apiError = error as? WhoopAPIError, apiError == .notAuthenticated {
+                    entry = TamagotchiEntry(
+                        date: cachedEntry.date,
+                        strain: cachedEntry.strain,
+                        strainLevel: cachedEntry.strainLevel,
+                        needsReauth: true
+                    )
                 }
+                // For other errors, use cached data as-is
             }
 
-            let level = StrainLevel.from(strain: strain)
-            let entry = TamagotchiEntry(
-                date: Date(),
-                strain: strain,
-                strainLevel: level,
-                isPlaceholder: false
-            )
-
-            // Refresh every 15 minutes
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())!
+            // Refresh every 15 minutes (WidgetKit budgets ~40-70 refreshes/day)
+            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())
+                ?? Date().addingTimeInterval(900)
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
             completion(timeline)
         }
@@ -48,10 +55,14 @@ struct TamagotchiTimelineProvider: TimelineProvider {
 
     private func entryFromStoredState() -> TamagotchiEntry {
         if let state = TamagotchiState.load() {
-            let level = StrainLevel.from(strain: state.strain)
-            return TamagotchiEntry(date: state.lastUpdated, strain: state.strain, strainLevel: level, isPlaceholder: false)
+            return TamagotchiEntry(
+                date: state.lastUpdated,
+                strain: state.strain,
+                strainLevel: state.strainLevel,
+                needsReauth: state.needsReauth
+            )
         }
-        return TamagotchiEntry(date: Date(), strain: 0, strainLevel: .resting, isPlaceholder: false)
+        return TamagotchiEntry(date: Date(), strain: 0, strainLevel: .resting, needsReauth: false)
     }
 }
 
@@ -61,7 +72,7 @@ struct TamagotchiEntry: TimelineEntry {
     let date: Date
     let strain: Double
     let strainLevel: StrainLevel
-    let isPlaceholder: Bool
+    let needsReauth: Bool
 }
 
 // MARK: - Small Widget View
@@ -71,10 +82,25 @@ struct TamagotchiSmallWidgetView: View {
 
     var body: some View {
         VStack(spacing: 6) {
-            TamagotchiCharacter(strainLevel: entry.strainLevel, strain: entry.strain)
+            if entry.needsReauth {
+                reauthOverlay
+            } else {
+                TamagotchiCharacter(strainLevel: entry.strainLevel, strain: entry.strain)
+            }
         }
         .containerBackground(for: .widget) {
             backgroundGradient
+        }
+    }
+
+    private var reauthOverlay: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "person.crop.circle.badge.exclamationmark")
+                .font(.title2)
+                .foregroundColor(.orange)
+            Text("Tap to sign in")
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(.secondary)
         }
     }
 
@@ -104,27 +130,31 @@ struct TamagotchiMediumWidgetView: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            TamagotchiCharacter(strainLevel: entry.strainLevel, strain: entry.strain)
-                .scaleEffect(1.2)
+            if entry.needsReauth {
+                reauthView
+            } else {
+                TamagotchiCharacter(strainLevel: entry.strainLevel, strain: entry.strain)
+                    .scaleEffect(1.2)
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Today's Strain")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(.secondary)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Today's Strain")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.secondary)
 
-                Text(String(format: "%.1f", entry.strain))
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    Text(String(format: "%.1f", entry.strain))
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
 
-                Text(entry.strainLevel.label)
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(statusColor)
+                    Text(entry.strainLevel.label)
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(statusColor)
 
-                Text(timeAgo)
-                    .font(.system(size: 9))
-                    .foregroundColor(.secondary)
+                    Text(timeAgo)
+                        .font(.system(size: 9))
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
             }
-
-            Spacer()
         }
         .padding(.horizontal, 4)
         .containerBackground(for: .widget) {
@@ -133,6 +163,22 @@ struct TamagotchiMediumWidgetView: View {
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
+        }
+    }
+
+    private var reauthView: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "person.crop.circle.badge.exclamationmark")
+                .font(.largeTitle)
+                .foregroundColor(.orange)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Session Expired")
+                    .font(.system(size: 14, weight: .semibold))
+                Text("Open app to reconnect WHOOP")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
         }
     }
 
@@ -160,12 +206,7 @@ struct WhoopTamagotchiWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TamagotchiTimelineProvider()) { entry in
-            if #available(iOS 17.0, *) {
-                WidgetEntryView(entry: entry)
-            } else {
-                WidgetEntryView(entry: entry)
-                    .padding()
-            }
+            WidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Whoop Tamagotchi")
         .description("Your Tamagotchi reacts to your WHOOP daily strain.")
@@ -196,20 +237,34 @@ struct WhoopTamagotchiWidgetBundle: WidgetBundle {
     }
 }
 
+// MARK: - WhoopAPIError Equatable
+
+extension WhoopAPIError: Equatable {
+    static func == (lhs: WhoopAPIError, rhs: WhoopAPIError) -> Bool {
+        switch (lhs, rhs) {
+        case (.notAuthenticated, .notAuthenticated): return true
+        case (.invalidResponse, .invalidResponse): return true
+        case (.rateLimited, .rateLimited): return true
+        case (.httpError(let a), .httpError(let b)): return a == b
+        default: return false
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("Small", as: .systemSmall) {
     WhoopTamagotchiWidget()
 } timeline: {
-    TamagotchiEntry(date: Date(), strain: 2.0, strainLevel: .resting, isPlaceholder: false)
-    TamagotchiEntry(date: Date(), strain: 6.5, strainLevel: .light, isPlaceholder: false)
-    TamagotchiEntry(date: Date(), strain: 11.0, strainLevel: .moderate, isPlaceholder: false)
-    TamagotchiEntry(date: Date(), strain: 15.5, strainLevel: .high, isPlaceholder: false)
-    TamagotchiEntry(date: Date(), strain: 19.0, strainLevel: .overreach, isPlaceholder: false)
+    TamagotchiEntry(date: Date(), strain: 2.0, strainLevel: .resting, needsReauth: false)
+    TamagotchiEntry(date: Date(), strain: 6.5, strainLevel: .light, needsReauth: false)
+    TamagotchiEntry(date: Date(), strain: 15.5, strainLevel: .high, needsReauth: false)
+    TamagotchiEntry(date: Date(), strain: 0, strainLevel: .resting, needsReauth: true)
 }
 
 #Preview("Medium", as: .systemMedium) {
     WhoopTamagotchiWidget()
 } timeline: {
-    TamagotchiEntry(date: Date(), strain: 14.2, strainLevel: .high, isPlaceholder: false)
+    TamagotchiEntry(date: Date(), strain: 14.2, strainLevel: .high, needsReauth: false)
+    TamagotchiEntry(date: Date(), strain: 0, strainLevel: .resting, needsReauth: true)
 }
